@@ -9,9 +9,9 @@ namespace MinimalApi.Services {
 
 		public static async Task<string> TestConnection() {
 			StringBuilder sb = new();
-			sb.AppendLine("MinimalApi hit the ground running!");
+			sb.AppendLine("[MinimalApi]");
 			sb.AppendLine();
-			sb.AppendLine("Checking database connection...");
+			sb.AppendLine($"Connection to \"{connString}\"...");
 			try {
 				using SqlConnection conn = new(connString);
 				await conn.OpenAsync();
