@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using Newtonsoft.Json.Linq;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace MinimalApi.Services {
@@ -66,5 +67,21 @@ namespace MinimalApi.Services {
 			}
 			return obj;
 		}
-	}
+	
+    public static object? Authenticate(object user) {
+			object? obj = null;
+			try {
+				JObject jObj = JObject.Parse(user.ToString());
+				obj = new {
+					username = jObj.GetValue("username").ToString(),
+					password = jObj.GetValue("password").ToString(),
+					isAuthenticated = (jObj.GetValue("username").ToString() == "user" && jObj.GetValue("password").ToString() == "user") ? true : false
+				};
+			}
+			catch (Exception ex) {
+				System.Diagnostics.Debug.WriteLine(ex.Message);
+			}
+			return obj;
+		}
+  }
 }
